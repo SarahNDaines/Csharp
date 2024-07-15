@@ -1,0 +1,136 @@
+Calling method
+- method name followed by parenthesis
+
+Console.WriteLine()
+
+- basic structure
+  - use PascalCase to name methods
+
+static void YourMethodName()
+{
+}
+
+- code uses Main method
+- define custom methods outside of Main
+
+using System;
+
+namespace DefineAMethod
+{
+  class Program
+  {
+    static void Main(string[] args)
+    {
+      VisitPlanets();
+    }
+    static void VisitPlanets() {
+      Console.WriteLine("Visiting planets in solar system.");
+    }
+  }
+}
+
+- method that takes arguments:
+  - define the type
+  - separate with commas
+
+static void YourMethodName(string identity, int age)
+{
+  Console.WriteLine($"{identity} is {age} years old.");
+}
+
+  - optional params
+    - use '=' to set default value
+
+static void Main(string[] args)
+{
+  YourMethodName("I'm hungry", "!"); // prints "I'm hungry!"
+  YourMethodName("I'm hungry");  // prints "I'm hungry."
+}
+
+static void YourMethodName(string message, string punctuation = ".")
+{
+  Console.WriteLine(message + punctuation);
+}
+
+  - named params
+    - can mixed ordered and named params, but ordered must come before named
+    - often used when method has a lot of optional params
+    - also useful to differentiate between similar params
+
+static void YourMethodName(int a = 0, int b = 0, int c = 0, int d = 0, int e = 0) {...}
+YourMethodName(d: 4);
+YourMethodName(4);  // sets a to 4
+YourMethodName(4);
+YourMethodName(d: 4, b: 1, a: 2); // can list named in any order among named
+YourMethodName(2, 1, d: 4) // a is 2, b is 1, d is 4
+YourMethodName(d: 4, 2, 1) // Error!
+
+  - method signature
+    - name and order of params
+  - method overload
+    - method has different behavior based on different parameter types and or number of params
+    - In method overloading, multiple methods can have the same name, as long as they have different method signatures.
+
+Math.Round(3.14159, 2); // returns 3.14
+Math.Round(3.14159); // returns 3
+
+- Math method
+  - Every time an application is started, the Main() method is called.
+
+--------------------------------------------------------------------
+Method Output
+
+the method declaration
+- the access modifiers (static, public)
+- return type
+- method name
+- parameter types
+
+Using out
+- methods can only return one thing
+- use out when we need 2 peices of information
+  - this is the method declaration for TryParse
+  - it returns a boolean if the string can be converted to int
+  - the variable defined as out can be accessed outside of the method, it must be set within the method
+  - result is the string as an int or zero if it can't convert it to an int.
+public static bool TryParse (string s, out int result);
+  - examples using out
+int number;
+bool success = Int32.TryParse("10602", out number); 
+// number is 10602 and success is true
+int number2;
+bool success2 = Int32.TryParse(" !!! ", out number2);
+// number2 is 0 and success2 is false
+  - shortcut defining number type within method call
+bool success = Int32.TryParse("10602", out int number);
+
+Using out in own methods
+- must set out var value before returning
+static string Yell(string phrase, out bool wasYellCalled)
+{
+  wasYellCalled = true;
+  return phrase.ToUpper();
+}
+- you must use out in the method definition and when calling it:
+using System;
+
+namespace UsingOut
+{
+  class Program
+  {
+    static void Main(string[] args)
+    {
+      string statement = "GARRRR";
+      string res = Whisper(statement, out bool marker);
+      Console.WriteLine(res);
+      Console.WriteLine(marker);
+      
+    }
+
+    static string Whisper(string input, out bool bequiet) {
+      bequiet = true;
+      return input.ToLower();
+    }
+	}
+}
+
