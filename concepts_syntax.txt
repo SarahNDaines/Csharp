@@ -1,0 +1,233 @@
+fundamental concepts, such as variables, data types, loops, conditionals, and functions.
+
+- log to console:
+Console.WriteLine("Hello World!");
+
+- read input from User:
+  - always returns a string
+  - to get an integer from the input need to convert from string to int type
+Console.WriteLine("How old are you?");
+string input = Console.ReadLine();
+Console.WriteLine($"You are {input} years old!");
+
+- run file
+dotnet run(enter) 
+
+- comments // and /* ... */
+- end lines with semicolon
+
+- variables use campleCasing
+string iAmAVariable;
+string i'mnot; // this will cause errors
+
+
+------------------------------------------------------------------------------------
+DataTypes:
+- C# is strongly typed > requires specifying data types being used;
+- static typed > check that correct types used before program can run;
+
+common c# data types
+- int
+- double: more accurate precision then float
+- string
+- char: single character
+- bool
+
+Other types
+- long: whole nums, longer range
+- float
+- decimal: monitary values
+- DateTime
+
+create static typed var
+- two lines
+// Declare an integer
+int myAge;
+myAge = 32;
+- one liner
+// Declare a string
+string countryName = "Netherlands";
+
+Errors:
+- forget to set type for randomData:
+The name 'randomData' does not exist in the current context [CS0103:] 
+- using wrong type definition:
+Cannot implicitly convert type 'double' to 'int'. An explicit conversion exists (are you missing a cast?)
+
+change type of var from one type to another
+- implicity conversion > storing an int in a double var doesn't lose any data
+int myInt = 3;
+// Turn it into a double
+double myDouble = myInt;
+- explicit conversion
+  - required when data would be lost (eg double to int)
+  - requires a cast operator
+double myDouble = 3.2;
+// Round myDouble to the nearest whole number
+int myInt = (int)myDouble;
+- also generally a Convert.toX() method
+  - Convert.ToString() and Convert.ToDouble()
+  - can't explicitly convert a string to an int
+    - use Convert.ToInt32() instead
+    - article https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/types/how-to-convert-a-string-to-a-number
+Console.Write("Enter your favorite number!: ");
+int faveNumber = Convert.ToInt32(Console.ReadLine());
+
+----
+Numberic DataTypes
+- int
+- float
+- double: more precise then float, but quicker to calculate then decimal
+  - you can save an int as a double, giving it the double type just allows it to have decimal values later
+double rate = 30;
+ Console.WriteLine(rate); // prints 30 not 30.0
+- decimal: use for monitary applciations for highest precision
+  - number followed by m to indicate it is a decimal not double
+decimal variableName = 489872.76m;
+
+Arithmatic operations
+- plus subtract mult, devide
+- use two ints will always return an int
+- using an int with a double will return a double
+Console.WriteLine(5 / 3);
+Console.WriteLine(5 / 3.0);
+// prints 1
+// prints 1.66667
+- shortcuts
+  - can use ++ and --
+  - can also use += and -=
+- modulo %
+  - returns the remainder?
+- built in methods
+- Math.Abs()—will find the absolute value of a number. Example: Math.Abs(-5) returns 5.
+- Math.Sqrt()—will find the square root of a number. Example: Math.Sqrt(16) returns 4.
+- Math.Floor()—will round the given double or decimal down to the nearest whole number. Example: Math.Floor(8.65) returns 8.
+- Math.Min()—returns the smaller of two numbers. Example: Math.Min(39, 12) returns 12.
+- NaN > not a number
+
+----------
+Text DataTypes
+- string
+  - use backslash to escape characters in string like " or \n
+  - string concatenation usesing +
+string yourFaveMusician = "David Bowie";
+string myFaveMusician = "Solange";
+Console.WriteLine("Your favorite musician is " + yourFaveMusician + " and mine is " + myFaveMusician + ".");
+  - concatenation with a string and something else will convert that other type to a string implicitly
+  - string interpolation (introduced version 6);
+    - string starts with $, insertion done with curly braces:
+string yourFaveMusician = "David Bowie";
+string myFaveMusician = "Solange";
+Console.WriteLine($"Your favorite musician is {yourFaveMusician} and mine is {myFaveMusician}.");
+  - Length
+userTweet.Length; // returns the length of the tweet
+  - IndexOf
+    - returns negative 1 if substring or char not found
+string word = "radio";
+word.IndexOf("a"); // returns 1
+  - Substring(start, length);
+    - first arg is the starting index
+    - second arg is optional length of the substring, if not provided defaults to taking from starting index to end;    
+    - non mutating?
+string name = "Codecademy"; 
+int start = 2;
+int length = 6;
+string substringName = name.Substring(start, length); // returns 'decade'
+---
+string plantName = "Cactaceae, Cactus"; 
+int charPosition = plantName.IndexOf("Cactus"); // returns 11
+string commonName = plantName.Substring(charPosition); // returns Cactus
+  - bracket notation to access char at index
+string plantName = "Cactaceae, Cactus";
+int charPosition = plantName.IndexOf("u"); // returns 15
+char u = plantName[charPosition]; // returns u
+  - ToUpper, ToLower > all uppercase or lowercase
+
+- char
+
+
+--------------------------------------------------------------
+Boolean Data Types
+
+type bool
+- used to store true and false
+- different then "true" and "false"
+comparison Operators
+- ==, !=, <, >, <=, >=
+Operators
+- &&   > and
+- ||   > or
+- !    > not
+
+-----------------------------------------------------------------
+Conditional Statements
+- If statements
+  - indent code inside curly braces 2 spaces
+
+string color = "blue";
+if (color == "blue")
+{
+  Console.WriteLine("color is blue");
+}
+
+- If…Else… statements
+- Else if statements
+  - else statement is optional but should come after any else statements
+
+string color = "red";
+
+if (color == "blue")
+{
+  // this code block will execute only if the value of color is 
+  // equivalent to "blue"
+  Console.WriteLine("color is blue");
+} 
+else if (color == "red")
+{
+  // this code block will execute if the value of color is 
+  // equivalent to "red"
+  Console.WriteLine("color is NOT blue");
+} 
+else // this is optional
+{
+  // this code block will execute if the value of color is 
+  // NOT equivalent to "blue" OR "red"
+  Console.WriteLine("color is NOT blue OR red");
+}
+
+- Switch statements
+  - single curly braces around the entire switch block and each case doesn't have curly braces
+  - value being compared goes in parenthesis after switch;
+  - include break statements in each case
+  - must have a default case
+  - case value semicolon
+    - indented code 
+
+string color;
+
+switch (color)
+{
+   case "blue":
+      // execute if the value of color is "blue"
+      Console.WriteLine("color is blue");
+      break;
+   case "red":
+      // execute if the value of color is "red"
+      Console.WriteLine("color is red");
+      break;
+   case "green":
+      // execute if the value of color is "green"
+      Console.WriteLine("color is green");
+      break;
+   default:
+      // execute if none of the above conditions are met
+      break;
+}
+
+- Ternary Operators
+  - wrap statement that is being evaluated in parenthesis
+
+string color = "blue";
+string result = (color == "blue") ? "blue" : "NOT blue";
+Console.WriteLine(result);
+

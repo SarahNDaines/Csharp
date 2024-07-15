@@ -1,0 +1,16 @@
+does C# have mutating methods?
+is modulo the remainder or just like the remainder?
+how are string and char different?
+- can you use the same string methods on chars as strings?
+- should if curly braces be on the next line?
+  - I tried with curly braces starting on the same line and it worked, might be a syntax question
+if (...) {
+
+}
+
+vs
+
+if (...)
+{
+
+}
