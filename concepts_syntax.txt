@@ -231,3 +231,101 @@ string color = "blue";
 string result = (color == "blue") ? "blue" : "NOT blue";
 Console.WriteLine(result);
 
+
+----------------------
+Loops
+
+While Loop
+---
+while (condition) 
+{
+  statement;
+}
+
+Do While Loop
+---
+do
+{
+  statement;
+} while (condition);
+
+For Loop
+---
+for (initialization; stopping condition; iteration statement)
+{
+  statement;
+}
+
+For Each Loop
+------
+- useful for iteratating over a collection
+string[] melody = { "a", "b", "c", "c", "b" };
+foreach (string note in melody)
+{
+  PlayMusic(note);
+}
+
+Break
+- used to terminate a loop
+-----
+while (playerIsAlive) 
+{ 
+// this code will keep running
+
+  if (playerIsAlive == false) 
+  { 
+    // eventually if this stopping condition is true, 
+    // it will break out of the while loop
+    break; 
+   } 
+ } 
+
+// rest of the program will continue
+
+Continue
+- used to skip part of a loop
+-----------
+int bats = 10;
+
+for (int i = 0; i <= 10; i++)
+{
+  if (i < 9)
+  {  
+    continue;
+  }
+  // this will be skipped until i is no longer less than 9
+  Console.WriteLine(i);
+}
+
+Return
+- used to exit a method and return a value
+  so it can be used to exit a loop in a method
+----
+class MainClass {
+ public static void Main (string[] args) {
+   UnlockDoor();
+
+  // after it hits the return statement, it will move on to this method
+   PickUpSword();
+ }
+
+ static bool UnlockDoor()
+ {
+   bool doorIsLocked = true;
+
+   // this code will keep running
+   while (doorIsLocked)
+   {
+     bool keyFound = TryKey();
+
+      // eventually if this stopping condition is true,
+      // it will break out of the while loop
+     if (keyFound)
+     {
+      // this return statement will break out of the entire method
+      return true;
+     }
+   }
+   return false;
+ }
+}

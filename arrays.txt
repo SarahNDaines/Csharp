@@ -1,0 +1,84 @@
+Arrays
+- ordered collection of same type elements
+
+- declare a variable for an array
+  - type of collection followed by empty square brackets
+
+string[] names
+
+- define array var and contents at the same time
+
+string[] names = {"Sarah", "Tim", "Kenn"}
+
+- instantiating new Array instance
+  - to define an array an then initialize it later you must use the new keyword
+
+// Initial declaration
+int[] plantHeights;
+
+// This works
+plantHeights = new int[] { 3, 4, 6 };   
+
+// This will cause an error
+// plantHeights = { 3, 4, 6 }; 
+
+- arrays have a fixed length once created, but we can change the contents.
+  - we can also set the length 
+  - creating an array with known length but no known values then default values are used
+    - default is 0 for array of ints
+    - default is null for array of strings
+
+// plantHeights will be equal to [0, 0, 0]
+int[] plantHeights = new int[3]; 
+
+// plantHeights will now be [0, 0, 8]
+plantHeights[2] = 8; 
+
+--------------
+Common methods
+https://learn.microsoft.com/en-us/dotnet/api/system.array.copy?view=net-8.0
+
+Array.Sort()
+- mutating
+- input array
+- returns?
+
+Array.IndexOf()
+- args: array, item that could be in array
+- returns -1 if item isn't found
+    - it returns the lower bound of the array, minus 1 (since most arrays start at 0, it’s usually -1).
+int[] plantHeights = { 3, 6, 4, 1, 6, 8 };
+
+ // returns 1
+Array.IndexOf(plantHeights, 6);
+
+Array.Find()
+- args: array, method that takes one item and returns a boolean
+    - common to use lambda for this method
+- returns first item that the method returns true
+int[] plantHeights = { 3, 6, 4, 1, 6, 8 };
+
+// Find the first occurence of a plant height that is greater than 5 inches
+int firstHeight = Array.Find(plantHeights, height => height > 5);
+
+Array.Copy()
+- copies from one array to another for a given length
+- other overloads
+string[] players = { "Emily", "Kyle", "Todd", "Rachel", "Grayson" };
+
+// This creates a new array with default values
+string[] playersCopy = new string[5];
+
+// This will populate the playersCopy array with { "Grayson", "Rachel", "Todd", "Kyle", "Emily" }
+Array.Copy(players, playersCopy, 5);
+
+Array.Clear()
+- three inputs: array, starting and ending index
+    - use the length of input array to reset the whole array
+- resets array values to defaults
+string[] players = { "Emily", "Kyle", "Todd", "Rachel", "Grayson" };
+
+// This will return { null, null, null, null, null }
+Array.Clear(players, 0, players.Length);
+
+Array.Reverse();
