@@ -1,5 +1,8 @@
 fundamental concepts, such as variables, data types, loops, conditionals, and functions.
 
+Creating a csharp file
+- extension is `.cs`
+
 - log to console:
 Console.WriteLine("Hello World!");
 

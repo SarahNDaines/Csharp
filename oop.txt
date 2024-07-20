@@ -1,0 +1,175 @@
+Classes:
+--------------------
+- Can define in the Program class, but not inside main
+- can also define in a separate file named the same as the class name
+- class names are normally PascalCase?
+- instantiate a new instance of class using new keyword
+  - instances are of the type of the class
+  - in the example below f is an instance of Forest
+  - f also has a type Forest
+
+example
+---
+class Forest {
+}
+
+Forest f = new Forest();
+
+- data in an object is called fields
+- it is one type of a class member
+- below the value of name and trees aren't set so they have default values
+    - int default value is 0
+    - string default value is null  
+    - bool default value is false
+- use lowercase to name fields
+- fields can be accessed and set using dot notation
+
+class Forest {
+  public string name;
+  public int trees;
+}
+
+- properties are another type of class member
+    - has two methods get() and set()
+    - can use getter and setter for validation
+    - common to name the property the uppercase version of the field
+    - set uses keyword value, this represents the value passed as arg
+
+public int area;
+public int Area
+{
+  get { return area; }
+  set { area = value; }
+}
+
+    - using setter for validation
+
+public int Area
+{
+  get { return area; }
+  set 
+  { 
+    if (value < 0) { area = 0; }
+    else { area = value; }
+  }
+}
+
+- automatic property
+    - we can default the getter and setters with no other logic using the following
+
+public string size;
+public string Size
+{
+  get { return size; }
+  set { size = value; }
+}
+
+    - becomes the following 
+        - note that we don't define the field size separately
+
+public string Size
+{ get; set; }
+
+- Acess modifiers
+    - using public for the fields makes it so they can access the properties directly without use the getter and setter 
+    - public member can be accessed by any class
+    - private can only be accessed by code in the same class
+    - classes default to public
+    - class members default to private
+    - can set get() or set to private or just not define
+
+public int Area
+{
+  get { return area; }
+  private set { area = value; }  
+}
+
+- class methods
+    - define a method in a class similar to how methods are defined normally
+    - remember that to use getter and setter you use the property which is capitalized to get and set the value
+    - you can use += and -= with properties and fields
+
+class Forest {
+  public int Area
+  { /* property body omitted */  }
+  public int IncreaseArea(int growth)
+  {
+    Area = Area + growth;
+    return Area;
+  }
+}
+
+- class constructors
+    - called when a new object is created
+    - used to initialize values for the instance
+    - no return type
+    - name is same as the class
+    - if no constructor is defined a parameterless constructor is created and used
+
+    class Forest
+{
+  public int Area;
+ 
+  public Forest(int area)
+  {
+    Area = area;
+  }
+}
+
+- this keyword
+    - use to avoid code like `Area = area;`
+    - which is ambigous
+    - refer to the current instance 
+
+class Forest
+{
+  public int Area
+  { /* property omitted */ }
+ 
+  public Forest(int area)
+  {
+    this.Area = area;
+  }
+}
+
+- Overloading
+    - like other methods we can also overload constructors
+    - usefull to define different method signatures
+
+public Forest(int area, string country)
+{ 
+  this.Area = area;
+  this.Country = country;
+ }
+
+public Forest(int area)
+{ 
+  this.Area = area;
+  this.Country = "Unknown";
+}
+
+- Default arguments version C# > 4.0
+    - can use default arguments when overloading to reduce the amount of code to change with updates
+
+public Forest(int area, string country = "Unknown")
+{
+  this.Area = area;
+  this.Country = country;
+}
+
+- Can also use :this() with version C# <= 4.0
+    - used to refer to another constructor in the same class
+    - the arguments types and order still has to match.
+    - basically  like super in Ruby
+ 
+ public Forest(int area, string country)
+{ 
+  this.Area = area;
+  this.Country = country;
+}
+
+public Forest(int area) : this(area, "Unknown")
+{ 
+  Console.WriteLine("Country property not specified. Value defaulted to 'Unknown'.");
+}
+
