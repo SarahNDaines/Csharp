@@ -173,3 +173,85 @@ public Forest(int area) : this(area, "Unknown")
   Console.WriteLine("Country property not specified. Value defaulted to 'Unknown'.");
 }
 
+- Static
+    - means associated with the class, not instance
+    - comes after the access modifire of the class member
+    - accessing using dot notation with the class name not the instance name
+        - f.definition would raise an error
+
+class Forest
+{
+  private static string definition;
+  public static string Definition
+  { 
+    get { return definition; }
+    set { definition = value; }
+  }
+}
+
+static void Main(string[] args)
+{
+  Console.WriteLine(Forest.Definition);
+}
+
+    - can also add static to a method
+        - can only access static members
+
+class Forest
+{
+  private static string definition;
+  public static void Define()
+  { 
+    Console.WriteLine(definition); 
+  }
+}
+
+    - can also create static constructors
+        - run once before class is created
+        - run before an instance is made from the class
+        - and before static members are accessed
+        - can't use access modifier with static constructors
+
+class Forest 
+{
+  static Forest()
+  { /* ... */ }
+}
+
+    - can create static classes
+        - can't instantiate from a static class
+        - usefull for utility classes like Math or Console
+        - they are tools, they don't store specific information
+
+Math.Min(34, 54);
+Console.WriteLine("yeehaw!");
+
+- Static Errors
+    - using access modifier with static constructor
+error CS0515: 'Forest.Forest()': static constructor cannot have an access modifier
+
+    - trying to reference a non static member from a class
+error CS0120: An object reference is required to access non-static field, method, or property 'Forest.Grow()'
+
+    - trying to reference a static member from an instance instead of the class
+error CS0176: Member 'Forest.TreeFacts' cannot be accessed with an instance reference; qualify it with a type name instead
+
+- Main() method
+    - method of the Program class
+    - public: can be called outside the program class
+    - static: called using class name instead of instance
+    - void: doesn't return a value
+    - one argument `string[] args`
+        - array of strings
+    - dotnet run calls the Main() method
+    - can pass arguments to main after the command
+
+class Program
+{
+  public static void Main (string[] args) 
+  {
+  }
+}
+
+dotnet run mango pineapple lychee
+// passes ["mango", "pineapple", "lychee"] to main method
