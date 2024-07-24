@@ -1,0 +1,118 @@
+Strings
+- they are reference type
+- String and string are equivalent
+- string is a class that represents a collections of char objects
+- String can act like a value reference
+    - ref always points to original object
+        - modifying one reference to a string will not affect other references to that string
+    - because strings are imutable, things that appear to modify the string actually return a new string obj
+// Example 1
+string dog = "chihuahua";
+string tinyDog = dog;
+dog = "dalmation";
+Console.WriteLine(dog);
+// Output: "dalmation"
+Console.WriteLine(tinyDog);
+// Output: "chihuahua"
+
+// Example 2
+string s1 = "Hello ";
+string s2 = s1;
+s1 += "World";
+System.Console.WriteLine(s1);
+// Output: "Hello World"
+System.Console.WriteLine(s2);
+// Output: "Hello"
+
+
+    - comparision (==) is done by value not reference
+
+string s = "hello";
+string t = "hello";
+// b is true
+bool b = (s == t);
+
+
+- Strings can be null, unassigned, or empty
+    - empty is unique to Strings
+
+// Unassigned
+string s;
+
+// Null
+string s2 = null;
+
+// Empty string
+string s3 = "";
+
+// Also empty string
+string s4 = String.Empty;
+
+// This prints true
+Console.WriteLine(s3 == s4);
+
+    - can check for null or empty using IsNullOrEmpty() method
+
+using System;
+
+namespace StringTheException
+{
+  class Program
+  {
+    static void Main(string[] args)
+    {
+      Console.WriteLine("user input: ");
+      string input = Console.ReadLine();
+
+      if (String.IsNullOrEmpty(input)) {
+        Console.WriteLine("You didn't enter anything!");
+      } else {
+        Console.WriteLine("Thank you for your submission!");
+      }
+    }
+  }
+}
+
+--------------
+String class methods
+
+- Length
+- Contains()
+
+string s = "Hello World";
+Console.WriteLine(s.Length);
+Console.WriteLine(s.Contains("o"));
+
+- Empty
+- IsNullOrEmpty
+
+string s = String.Empty;
+bool isEmpty = String.IsNullOrEmpty(s);
+
+
+- Replace(String, String)
+    - returns a new string
+    - not mutating
+
+using System;
+
+namespace StringTheException
+{
+  class Program
+  {
+    static void Main(string[] args)
+    {
+      string lyrics = 
+        "Dollie, Dollie, bo-bollie,\n" +
+        "Banana-fana fo-follie\n" +
+        "Fee-fi-mo-mollie\n" +
+        "Dollie!";
+      
+      // Call `Replace()` here
+      lyrics = lyrics.Replace("ollie", "ana");
+      
+      Console.WriteLine(lyrics);
+    }
+  }
+}
+

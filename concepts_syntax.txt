@@ -262,6 +262,8 @@ for (initialization; stopping condition; iteration statement)
 For Each Loop
 ------
 - useful for iteratating over a collection
+- NOTE!!!
+  - we type the item in the collection, not the collection
 string[] melody = { "a", "b", "c", "c", "b" };
 foreach (string note in melody)
 {
@@ -332,3 +334,205 @@ class MainClass {
    return false;
  }
 }
+
+
+---------------------------------------------------------------------
+References in Csharp
+
+- classes are reference types
+  - when creating a new instance the var stores a reference to the object
+
+Dissertation diss1 = new Dissertation();
+Dissertation diss2 = diss1;
+diss1.CurrentPage = 0;
+diss2.CurrentPage = 16;
+Console.WriteLine(diss1.CurrentPage); //16
+Console.WriteLine(diss2.CurrentPage); //16
+  - because the variables reference the same objectline 345 and 346 change the CurrentPage of the object to 0 and then 16
+
+- int is a value type
+  - the var stores the value
+
+int num = 6;
+int num2 = num;
+num2 = 7;
+Console.WriteLine(num) // 6
+Console.WriteLine(num2) // 7
+
+  - these reference different values because the var stores the value not a reference
+  - so asigning num2 to 7 is a reassignment
+  - All primative data types are value types:
+int
+double
+bool
+char
+
+- reference vs value comparison
+  - when comparing two vars with ==
+  - values compare if they have the same value
+  - references compare if they reference the same object
+
+Dissertation d1 = new Dissertation(50);
+Dissertation d2 = new Dissertation(50);
+Console.WriteLine(d1 == d2);
+// Output: false
+
+  - because they reference two different objects they are not the same even though they  were instantiated the same
+- referencing different types
+  - an object can be typed with the class or the interface
+  - since a class can have more methods then the interface, typing by the interface means that it will only expect the methods in the interface
+  - if we assign a new variable to the reference to the instance from the class, but type it with the interface
+    - then when using the new var we can only use the methods defined in the interface
+
+Dissertation diss = new Dissertation(50);
+IFlippable fdiss = diss;
+
+diss.Flip();
+fdiss.Flip();
+Console.WriteLine(diss.Define());
+// This causes an error! since Define() is not defined in the interface
+Console.WriteLine(fdiss.Define());
+
+  - this applies to base classes as well
+    - the superclass Book, does not have the method Define() defined in the class
+
+Dissertation diss = new Dissertation(50);
+Book bdiss = diss;
+Console.WriteLine(diss.Title);
+Console.WriteLine(bdiss.Title);
+diss.Define();
+// This causes an error!
+bdiss.Define();
+
+- Array of references
+  - if we wanted to flip a set of objects we can use the type of the Interface that ensures they have the method Flip for the array
+  - then we can loop through the array to flip all the objects
+
+IFlippable[] classroom = new IFlippable[] { new Diary(1), new Diary(30), new Dissertation(50), new Dissertation(49) };
+
+foreach (IFlippable f in classroom) 
+{
+  f.Flip();
+}
+
+- polymorphism
+  - objects of different types have common interface
+  - objects maintain functi their type
+    - the method Bark() can be implemented differently between two classes that both use Bark, but are called with the same type and number of params
+
+Book bk = new Book();
+Book bdiss = new Dissertation();
+Console.WriteLine(bk.Stringify());
+Console.WriteLine(bdiss.Stringify());onality unique to
+
+//This is a Book object!
+//This is a Dissertation object!
+
+--------------
+- Casting
+
+Dissertation diss = new Dissertation();
+Book bdiss = diss;
+IFlippable fdiss = diss;
+  
+  - upcast: using a reference up inheritence heirchy, a superclass
+    - After upcasting, you can treat the object as if it were an instance of the base class.
+    - Properties and methods specific to the derived class (not present in the base class) won’t be accessible.
+    - This conversion is implicit, meaning you don’t need to specify the cast explicitly.
+
+Animal animal = new Snake(); // Upcasting
+Here, Snake (a derived class) is upcast to Animal (the base class).
+
+
+  - downcast: using a reference from lower in the inheritence heirchy, subclass
+    - done explicitly and may succeed only if the object is compatible with the target type.
+    - Use the as operator for downcasting; it evaluates to null if the cast fails.
+      - other option: `is` operators
+
+var feline = (Feline)animal; // Downcasting
+// Here, animal (of type Animal) is downcast to Feline.
+
+Book bk = new Book();
+Dissertation bdk = (Dissertation)bk;
+// bk of type Book is downcase to Dissertation
+
+  - Remember, upcasting is safe and always succeeds, while downcasting requires caution and runtime checks
+
+- Null and unassigned references
+  - used to show that a reference is missing
+  - used for reference variables that haven't been set yet
+  - used to initialize an empty array of references
+
+// reference missing
+Diary dy = null;
+
+// create reference var without value
+Diary dy;
+// dy is unassigned
+
+// create empty array of reference types
+Diary[] diaries = new Diary[5];
+// diaries[1] is unassigned, diaries[2] is unassigned, etc.
+
+  - can only check for null reference if it is explicitly assigned to null
+
+Diary dy = null;
+Console.WriteLine(dy == null);
+// Output: true
+
+Object o;
+Console.WriteLine (o == null);
+// error CS0165: Use of unassigned local variable 'o'
+
+- reference and corresponding object don't have to have the same type
+- functionality of a variable is limited by the reference type, not the object it references type
+
+---------
+Object
+- reference type that can be used to type all objects
+- all classes derived from Object class
+- can type all objects as Object
+  - lose functionality of specific class
+  - lose type checking that prevents errors
+
+  - can safely type any unknown object as Object
+  - can access all methods from Object class
+
+- value types and strings also inherit from Object
+
+- usefull members of Object class
+- Equals(Object) — returns true if the current instance and the argument are equal (using value equality for value types and referential equality for reference types)
+- GetType() — returns the type of the object
+- ToString() — returns a string describing the object
+
+- The Equals() and ToString() methods in Object are virtual, so they can be overridden.
+
+class Diary
+{
+  /* other members omitted */
+
+  public override string ToString()
+  {
+    return $"This Diary is currently on page {CurrentPage}."; 
+  }
+}
+
+Diary dy = new Diary(7);
+Console.WriteLine(dy.ToString());
+// Output: "This Diary is currently on page 7."
+
+- the method ToString() is called with Console.WriteLine()
+  - the following lines are equivalent
+
+Console.WriteLine(b);
+Console.WriteLine(b.ToString());
+
+
+-----------
+keyword var
+- introduced in v3.0
+- used for implicit typing
+- can be used for local variables inside code blocks
+  - methods, loops...
+- can't use as return type
+- can't use as method parameter

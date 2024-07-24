@@ -1,0 +1,151 @@
+LINQ
+- add on to .net and C#
+- usefull for complex selections and transformations
+- works on local and remote data sources
+
+- each selection/transformation is called a query
+
+- LINQ provides new methods
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace LearnLinq
+{
+  class Program
+  {
+    static void Main()
+    {
+      List<string> heroes = new List<string> { "D. Va", "Lucio", "Mercy", "Soldier 76", "Pharah", "Reinhardt" };
+      
+      // Approach 1: without LINQ
+      List<string> longLoudHeroes = new List<string>();
+      
+      foreach (string hero in heroes)
+      {
+        if (hero.Length > 6)
+        {
+          string formatted = hero.ToUpper();
+          longLoudHeroes.Add(formatted);
+        }
+      }
+      
+      // Approach 2: with LINQ
+      var longLoudHeroes2 = from h in heroes
+            where h.Length > 6
+            select h.ToUpper();
+      
+      // Printing...
+      Console.WriteLine("Your long loud heroes are...");
+      
+      foreach (string hero in longLoudHeroes2)
+      {
+        Console.WriteLine(hero);
+      }
+    }
+  }
+}
+
+
+
+- import into the file
+
+using System.Linq;
+
+- query returns a value
+- or object of type IEnumerable<T>
+    - works with foreach loops
+    - can use Count()
+- common to store in type var
+    - the type is inferred from the right side of the equation
+
+string[] names = { "Tiana", "Dwayne", "Helena" };
+var shortNames = names.Where(n => n.Length < 4);
+
+- query syntax
+    - multiline
+    - similar to SQL queries
+    - single  ; at the end
+
+var longLoudHeroes = from h in heroes
+  where h.Length > 6
+  select h.ToUpper();
+
+- method syntax
+    - same as normal C# syntax
+    - calling methods on objects
+
+var longHeroes = heroes.Where(h => h.Length > 6);
+var longLoudHeroes = longHeroes.Select(h => h.ToUpper());
+
+
+- operators
+    - where / Where()
+    - select / Select()
+
+    - they are used as both keywords and methods > so we generally call them operators
+
+string[] heroes = { "D. Va", "Lucio", "Mercy", "Soldier 76", "Pharah", "Reinhardt" };
+
+// Query syntax
+var queryResult = from x in heroes
+                where x.Contains("a")
+                select $"{x} contains an 'a'";
+
+// Method syntax
+var methodResult = heroes
+.Where(x => x.Contains("a"))
+.Select(x => $"{x} contains an 'a'");
+
+- query syntax
+    - from operator
+        - declares a var to represent each item in collection
+    - where operator
+        - condition to pick elements
+        - normally written like conditional in if statement
+    - select operator
+        - what is returned for each element in the sequence
+        - can use to modify the elements like changing to uppercase
+    - from and select are required,
+    - where is optional
+
+string[] heroes = { "D. Va", "Lucio", "Mercy", "Soldier 76", "Pharah", "Reinhardt" };
+
+var shortHeroes = from h in heroes
+  where h.Length < 8
+  select h;
+
+- method syntax
+    - query operator is written a method
+
+    - Where()
+        - selects elements that return true for the passed in lambda method
+
+string[] heroes = { "D. Va", "Lucio", "Mercy", "Soldier 76", "Pharah", "Reinhardt" };
+var shortHeroes = heroes.Where(h => h.Length < 8);
+
+[ D. Va, Lucio, Mercy, Pharah ]
+
+
+    - Select()
+        - used for transformation of elements
+
+string[] heroes = { "D. Va", "Lucio", "Mercy", "Soldier 76", "Pharah", "Reinhardt" };
+var loudHeroes = heroes.Select(h => h.ToUpper());
+
+
+    - to combine select with where we can use two statements, or chain them with dot syntax
+
+var longHeroes = heroes.Where(h => h.Length > 6);
+var longLoudHeroes = longHeroes.Select(h => h.ToUpper());
+
+// same as 
+
+var longLoudHeroes = heroes
+  .Where(h => h.Length > 6)
+  .Select(h => h.ToUpper());
+
+- LINQ can be used with any Object that supports foreach
+
+

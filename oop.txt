@@ -255,3 +255,140 @@ class Program
 
 dotnet run mango pineapple lychee
 // passes ["mango", "pineapple", "lychee"] to main method
+
+--------------------------------------------------------
+Interfaces
+----------
+
+- interface is declaring the methods and properties that an instance from a class must have
+- doesn't decide how they are implemented
+- interface name starts with `I`
+- properties and method bodies aren't defined
+- should define an interface in a separate file like classes
+
+
+interface IAutomobile
+{
+  string Id { get; }
+  void Vroom();
+}
+
+- to show that a class uses an interface follow the name of the class with the name of the interface
+
+class Sedan : IAutomobile
+{
+    public string Id {get;}
+    public void Vroom() {
+        Console.WriteLine("Vroom");
+    }
+}
+
+- if the class doesn't have the properties and methods in the class then we will get the following error:
+error CS0535: Sedan does not implement interface member 'IAutomobile.LicensePlate'
+
+- Interfaces define what the class must have, but the class can have more then what the interface defines
+- can't be used to specify fields and constructors
+- can use interfaces to group classes that behave similarly
+
+- classes can implement more then one interface
+
+- Csharp has inheritence to avoid duplicating code
+
+
+----------------------------------------------------------------
+Inheritence
+
+- can only inherit from one class
+- inherit, writing colon followed by the class name to inherit from followed by any interfaces separated by commas
+- the class it inherits from should come before any interfaces
+- in the following example the class sudan inherits from Vehicle
+    - it has the IAutomobile interface
+
+class Sedan : Vehicle, IAutomobile
+{
+}
+
+- use `protected` access modifier to allow the parent class and any classes that inherit from the parent class to access that class member
+
+- use `base` keyword to refer to superclass inside subclass
+    - if the class Vehicle defines SpeedUp
+    - and in the subclass we want to access that method
+    - the following example shows how
+base.SpeedUp();
+
+- to use the superclass constructor
+    - to call with parameters use the following
+    - assumes that Vehicle has a constructor that takes one double parameter
+    - note that calling the superclass constructor that we use colon followed by base with the parameter names (not types) in parantheses
+
+class Sedan : Vehicle
+{
+  public Sedan (double speed) : base(speed)
+  {
+  }
+}
+
+    - will call vehicle constructor with no params if not defined
+        - withoud explicit call to base() it will implicitly call the default parameterless constructor for superclass
+
+class Sedan : Vehicle
+{
+  // Implicitly calls base(), aka Vehicle()
+  public Sedan (double speed)
+  {
+  }
+}
+
+        - is equivalent to:
+
+{
+  public Sedan (double speed) : base()
+  {
+  }
+}
+
+        -  This code will ONLY work if the constructor Vehicle() exists. If it doesn’t, then an error will be thrown.
+            - when does the default parameterless constructor not exist?
+            - when we explicitly define a constructor then there is no longer a constructor without parameters automatically created.
+
+- override
+    - used to change how the superclass method works in a subclass
+    - mark the method in the superclass with the keyword `virtual` saying that this might be overridden
+    - in the subclass mark the method with `override` to indicate that you are overriding the method
+
+// superclass
+public virtual void SpeedUp()
+
+// subclass
+public override void SpeedUp()
+
+    - hidding a method in a superclass with the method in the subclass with the same name is another solution
+        - define method with same name in subclass as superclass
+        - don't use virtual and override keywords
+        - more confusing and not best practice
+    - another solution is `new`
+        - didn't explain but said that using virtual and override is still preferred for its clarity
+
+- abstract
+    - used to define a method in superclass that must be overridden in the subclass
+        - the method overriding it must use    `override` keyword
+    - if a superclass has an abstract method
+        - it has a method that isn't defined
+        - can't have any instances
+        - therefor the class itself must also be abstract
+
+// abstract method
+public abstract string Describe();
+
+// abstract superclass
+abstract class Vehicle
+
+    - if you don't set the superclass as abstract you will get the following error
+
+error CS0513: 'Vehicle.Describe()' is abstract but it is contained in non-abstract class 'Vehicle'
+
+// overriding abstract method in subclass
+public override string Describe()
+{
+  return $"This Sedan is moving on {Wheels} wheels at {Speed} km/h, with license plate {LicensePlate}.";
+}

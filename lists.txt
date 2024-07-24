@@ -1,0 +1,161 @@
+Arrays
+- have limited Length
+- have to track num of elements using separate index
+- can only edit single element at a time
+
+Lists
+- still sequential list
+- can hold references to any type
+- no length limit
+- auto track num of elements in list
+- have methods to edit multiple elements at the same time
+
+using System;
+using System.Collections.Generic;
+
+namespace LearnLists
+{
+  class Program
+  {
+    static void Main()
+    {
+      List<string> citiesList = new List<string> { "Delhi", "Los Angeles", "Saint Petersburg" };
+      
+      citiesList.Add("New York City");
+      
+      citiesList.Remove("Delhi");
+      
+      citiesList.AddRange(new string[] {"Cairo", "Johannesburg"});
+      
+      bool hasNewDelhi = citiesList.Contains("New Delhi");
+      
+      foreach (string city in citiesList)
+      {
+        Console.WriteLine(city);
+      }
+    }
+  }
+}
+
+
+- to create a List you specify the type in angle brackets
+    - example list
+        - stores a list of strings
+        - name is citiesList
+        - initialized with new keyword
+        - list is initially empty, zero length
+        - can add elements using Add()
+        - access elements using bracket notation with index
+List<string> citiesList = new List<string>();
+citiesList.Add("Delhi");
+string city = citiesList[0];
+citiesList[0] = "New Delhi";
+
+- In order to use lists add the following to the top of the file:
+
+using System.Collections.Generic;
+
+- can initialize with values
+    - note that initializing without any values uses ()
+    - and initializing with values using {}
+
+List<string> citiesList2 = new List<string> { "Delhi", "Los Angeles" };
+
+- Count property
+
+List<string> citiesList = new List<string> { "Delhi", "Los Angeles" };
+int numberCities = citiesList.Count;
+// numberCities is 2
+
+- Contains() method
+
+bool hasDelhi = citiesList.Contains("Delhi");
+bool hasDubai = citiesList.Contains("Dubai");
+// hasDelhi is true, hasDubai is false
+
+- Remove() method
+    - returns true if the item was found and removed, false otherwise
+
+List<string> citiesList = new List<string> { "Delhi", "Los Angeles", "Kyiv" };
+bool success = citiesList.Remove("Delhi");
+// success is true
+
+- Clear() method
+    - remove all elements from list
+
+List<string> citiesList = new List<string> { "Delhi", "Los Angeles", "Kyiv" };
+citiesList.Clear();
+
+Console.WriteLine(citiesList.Count);
+// Output: 0
+
+- Can't access element at index out of bounds
+    - if the list has 10 elements and we try to access the element at index 10 (the 11th position) it will error
+    - instead use Count to ensure that an index exists before accessing it
+
+int index = 1001;
+if (index < numbers.Count)
+{
+  Console.WriteLine(numbers[index])
+}
+
+- Range
+    - allows us to add, access or  remove mult elements at once
+    - subsequence of elements a range.
+    - in the list [ "first", "second", "third", "fourth", "fifth" ]
+        - the range of elements from index 1 to 3 is [ "second", "third", "fourth" ]
+    - store a range as a List<TYPE>
+
+methods
+--------------
+- AddRange()
+    - takes an array or list as an argument.
+    - Adds the values to the end of the list.
+    - Returns nothing.
+- InsertRange()
+    - takes an int and array or list as an argument
+    - Adds the values at the int index
+    - Returns nothing.
+- RemoveRange()
+    - takes two int values
+        - The first int is the index at which to begin removing and the second int is the number of elements to remove.
+    - Returns nothing.
+- GetRange()
+    - takes two int values
+        - The first int is the index of the first desired element and the second int is the number of elements in the desired range.
+    - Returns a list of the same type.
+
+List<string> places = new List<string> { "first", "second" };
+
+places.AddRange(new string[] { "fifth", "sixth" });
+// List is  "first", "second", "fifth", "sixth" ]
+places.InsertRange(2, new string[] { "third", "fourth"});
+// List is [ "first", "second", "third", "fourth", "fifth", "sixth" ]
+places.RemoveRange(4, 2);
+// List is [ "first", "second", "third", "fourth" ]
+List<string> newPlaces = places.GetRange(0, 3);
+// New list is [ "first", "second", "third" ]
+
+---------------------------------
+Generic Colections
+
+- have to include the following at the beginning of the file because they don't exist in the default set of system classes
+using System.Collections.Generic;
+- also used to include dictionaries
+
+- they are defined generally without a specific type in mind
+    - then we define the type when instantiating them
+
+List<string> citiesList = new List<string>();
+List<Object> objects = new List<Object>();
+
+
+---------------------------------
+- why use arrays over lists?
+    - lists use arrays under the hood
+    - this means that arrays are faster when the length of the array is known
+- use lists
+    - when length can change
+    - when wanting extra methods
+
+
